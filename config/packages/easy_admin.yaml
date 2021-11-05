@@ -1,0 +1,103 @@
+easy_admin:
+    site_name: 'Houssem'
+    formats:
+        date: 'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+
+    design:
+        brand_color: '#0032a0'
+        assets:
+            css: ['bundles/easyadmin/custom_backend.css']
+        menu:
+            - Category
+            - User
+            - Product
+            - Auction
+            - Cart
+            - CartItem
+    entities:
+        Category:
+            class: App\Entity\Category
+            label: 'Catégories'
+            list:
+                actions: ['new']
+                fields:
+                    - { property: 'parent', label: 'Parent' }
+                    - { property: 'name', label: 'Label' }
+            form:
+                fields:
+                    - { property: 'parent', label: 'Parent'}
+                    - { property: 'name', label: 'Label', type_options: { required: true }}
+        User:
+            class: App\Entity\User
+            label: 'Utilisateurs'
+            disabled_actions: ['delete']
+            list:
+                actions: ['edit']
+                fields:
+                    - { property: 'email', label: 'Email' }
+                    - { property: 'lastname', label: 'Nom' }
+                    - { property: 'firstname', label: 'Prénom'}
+            edit:
+                fields:
+                    - { property: 'email', label: 'Email', type_options: { required: true }}
+                    - { property: 'lastname', label: 'Nom', type_options: { required: true }}
+                    - { property: 'firstname', label: 'Prénom', type_options: { required: true }}
+            show:
+                fields:
+                    - { property: 'email', label: 'Email', type_options: { required: true }}
+                    - { property: 'lastname', label: 'Nom', type_options: { required: true }}
+                    - { property: 'firstname', label: 'Prénom', type_options: { required: true }}
+        Product:
+            class: App\Entity\Product
+            label: 'Produits'
+            list:
+                actions: ['new']
+                fields:
+                    - { property: 'user', label: 'Vendeur' }
+                    - { property: 'category', label: 'Catégorie' }
+                    - { property: 'name', label: 'Label' }
+                    - { property: 'shortDescription', label: 'Déscription' }
+                    - { property: 'transactionType', label: 'Type de transaction' }
+                    - { property: 'timeLimit', label: 'Temps limite' }
+                    - { property: 'price', label: 'Prix' }
+            form:
+                fields:
+                    - { property: 'user', label: 'Vendeur', type_options: { required: true }}
+                    - { property: 'category', label: 'Catégorie', type_options: { required: true }}
+                    - { property: 'name', label: 'Label', type_options: { required: true }}
+                    - { property: 'shortDescription', label: 'Déscription courte' }
+                    - { property: 'description', label: 'Déscription' }
+                    - { property: 'transactionType', label: 'Type de transaction' }
+                    - { property: 'timeLimit', label: 'Temps limite' }
+                    - { property: 'price', label: 'Prix' }
+        Auction:
+          class: App\Entity\Auction
+          label: 'Enchères'
+          disabled_actions: ['delete', 'edit']
+          list:
+            fields:
+              - { property: 'user', label: 'Utilisateur' }
+              - { property: 'product', label: 'Produit' }
+              - { property: 'price', label: 'Prix'}
+        Cart:
+            class: App\Entity\Cart
+            label: 'Paniers'
+            disabled_actions: ['delete', 'new', 'edit']
+            list:
+                fields:
+                    - { property: 'user', label: 'Utilisateur' }
+                    - { property: 'cartItems', label: 'Produits' }
+                    - { property: 'createdAt', label: 'Date de création'}
+        CartItem:
+            class: App\Entity\CartItem
+            label: 'Details Paniers'
+            disabled_actions: ['delete', 'new', 'edit']
+            list:
+                fields:
+                    - { property: 'cart', label: 'Panier' }
+                    - { property: 'cart.user', label: 'Utilisateur' }
+                    - { property: 'product', label: 'Produit'}
+                    - { property: 'price', label: 'Prix'}
+                    - { property: 'createdAt', label: 'Date de création'}

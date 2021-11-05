@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div id="loader-wrapper" class="loader-off">
+        <div id="loader"></div>
+    </div>
+    <div class="wrapper">
+        <!-- Header section -->
+        <header class="header header--only-logo header--fill">
+            <div class="container">
+                <!--  Logo  -->          <a class="logo" href="{{ path('app_home') }}">
+                    <img class="logo-default" src="{{ asset('assets/images/logo.png')}}" alt=""/>
+                    <img class="logo-mobile" src="{{ asset('assets/images/logo-mobile.png')}}" alt=""/>
+                    <img class="logo-transparent" src="{{ asset('assets/images/logo-transparent.png')}}" alt=""/>
+                </a>
+                <!-- End Logo -->
+            </div>
+        </header>
+        <div id="pageContent">
+
+            <!-- Content section -->
+            {% set formErrors = registrationForm.vars.errors.form.getErrors(true) %}
+
+            <section class="content content--fill top-null">
+                <div class="container">
+                    <h2 class="h-pad-sm text-uppercase text-center">CRÉER UN COMPTE</h2>
+                    <h6 class="text-uppercase text-center">Veuillez saisir les informations suivantes pour créer votre compte.</h6>
+                    <div class="divider divider--sm"></div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                            <div class="card card--form">
+                                <div class="divider divider--xs"></div>
+                                {{ form_start(registrationForm) }}
+                                <div class="contact-form">
+                                    {{ form_widget(registrationForm.lastname, {'attr': {'placeholder': 'Nom', 'class': 'input--wd input--wd--full'}}) }}
+                                    {{ form_widget(registrationForm.firstname, {'attr': {'placeholder': 'Prénom', 'class': 'input--wd input--wd--full'}}) }}
+                                    {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Email', 'class': 'input--wd input--wd--full'}}) }}
+                                    {{ form_widget(registrationForm.plainPassword.first, {'attr': {'placeholder': 'Mot de passe', 'class': 'input--wd input--wd--full'}}) }}
+                                    {{ form_widget(registrationForm.plainPassword.second, {'attr': {'placeholder': 'Confirmer le mot de passe', 'class': 'input--wd input--wd--full'}}) }}
+                                    <div class="divider divider--xs"></div>
+                                    <button type="submit" class="btn btn--wd text-uppercase wave">Valider</button>
+                                    {{ form_end(registrationForm) }}
+                                </div>
+                                <div>
+                                    {% if formErrors|length %}
+                                        <ul>
+                                            {% for error in formErrors %}
+                                                <li>{{ error.message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="card--form__footer"> <a href="/">&lt;&nbsp;Back</a> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider divider--xl"></div>
+                </div>
+            </section>
+
+            <!-- End Content section -->
+        </div>
+    </div>
+
+
+    <div class="signup">
+        <div class="baro">
+            <img src="./bundles/app/images/baro.png" alt="barometre"/>
+        </div>
+        {{ form_start(registrationForm) }}
+        <div class="form">
+            {{ form_widget(registrationForm.lastname, {'attr': {'placeholder': 'Nom'}}) }}
+            {{ form_widget(registrationForm.firstname, {'attr': {'placeholder': 'Prénom'}}) }}
+            {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Email'}}) }}
+            {{ form_widget(registrationForm.plainPassword.first, {'attr': {'placeholder': 'Mot de passe'}}) }}
+            {{ form_widget(registrationForm.plainPassword.second, {'attr': {'placeholder': 'Confirmer le mot de passe'}}) }}
+        </div>
+        <div class="action">
+            <button type="submit">Valider</button>
+        </div>
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

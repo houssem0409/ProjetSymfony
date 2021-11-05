@@ -1,0 +1,123 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Mes Informations{% endblock %}
+
+{% block content %}
+    <div id="pageContent">
+
+        <!-- Breadcrumb section -->
+
+        <section class="breadcrumbs  hidden-xs">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb--wd pull-left">
+                    <li><a href="{{ path('app_home') }}">Home</a></li>
+                    <li class="active">Mes informations</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Content section -->
+        <section class="content">
+            <div class="container">
+                <h2 class="text-uppercase">Mon Compte</h2>
+                <div class="card card--padding">
+                    <div class="card__row-line">
+                        <h4 class="text-uppercase h-pad-xs">Mes produits</h4>
+                    </div>
+                    <div class="card__row-line">
+                        <div class="hr"></div>
+                        <table class="table shopping-cart-table table-striped text-center order-history">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Type de transaction</th>
+                                <th>Prix</th>
+                                <th>Temps d'enchère</th>
+                                <th>Statut</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in app.user.products %}
+                            <tr>
+                                <td>
+                                    <div class="th-title visible-xs">Id</div>
+                                    <a href="#">{{ product.id }}</a></td>
+                                <td>
+                                    <div class="th-title visible-xs">Nom</div>
+                                    {{product.name}}
+                                </td>
+                                <td>
+                                    <div class="th-title visible-xs">Type de transaction</div>
+                                    {% if product.transactionType == 'A' %}Achat immédiat{% else %} Enchère {% endif %}
+                                </td>
+                                <td>
+                                    <div class="th-title visible-xs">Prix</div>
+                                    {{product.getMaxPrice}} DT
+                                </td>
+                                <td>
+                                    <div class="th-title visible-xs">Temps d'enchère</div>
+                                    {{product.timeLimit}} (Heures)
+                                </td>
+                                <td>
+                                    <div class="th-title visible-xs">Statut</div>
+                                    {{ product.status }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card__row-line">
+                        <h4 class="text-uppercase h-pad-xs">Mes enchères</h4>
+                    </div>
+                    <div class="card__row-line">
+                        <div class="hr"></div>
+                        <table class="table shopping-cart-table table-striped text-center order-history">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Produit</th>
+                                <th>Prix enchère</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for auction in app.user.auctions %}
+                                <tr>
+                                    <td>
+                                        <div class="th-title visible-xs">Id</div>
+                                        <a href="#">{{ auction.id }}</a></td>
+                                    <td>
+                                        <div class="th-title visible-xs">Produit</div>
+                                        {{auction.product.name}}
+                                    </td>
+                                    <td>
+                                        <div class="th-title visible-xs">Prix enchère</div>
+                                        {{auction.price}} DT
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card__row-line">
+                        <h4 class="text-uppercase h-pad-sm">Mes Informations</h4>
+                        <table class="table-address">
+                            <tbody>
+                            <tr>
+                                <td>Nom & Prénom:</td>
+                                <td><strong>{{ app.user.fullname }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>E-mail:</td>
+                                <td><strong>{{app.user.email}}</strong>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </section>
+        <!-- End Content section -->
+    </div>
+{% endblock %}

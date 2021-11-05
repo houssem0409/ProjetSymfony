@@ -1,0 +1,71 @@
+div.login {
+    padding: 30px 0;
+}
+
+div.login h3 {
+    font-size: 36px;
+    padding-bottom: 15px;
+}
+
+div.login .form-group{
+    display: block;
+}
+
+div.login .panel-body{
+    margin: auto 30%;
+}
+
+@media screen and (max-width: 420px) {
+    div.login .panel-body{
+        margin: auto;
+    }
+
+    div.login h3 {
+        font-size: 30px;
+    }
+}
+
+@media screen and (min-width: 421px) and (max-width: 720px) {
+    div.login .panel-body{
+        margin: auto 25%;
+    }
+}
+
+.content-header .global-actions{
+    width: 80% !important;
+}
+
+.content-header-title{
+    width: 20% !important;
+}
+
+.quizSession.form-widget{
+    flex: none;
+    width: 50%;
+}
+
+.answer.form-action.form-action-search.action-search{
+    width: 100%;
+}
+
+.sessionQuestion .form-group label{
+    text-align: left;
+}
+
+.sessionQuestion {
+    border: dotted 1px gray;
+    padding: 0px 10px;
+}
+
+.field-collection-item-row{
+    position: relative;
+}
+
+a.field-collection-item-action{
+    position: absolute;
+    right: 5px;
+}
+
+.sessionQuestion .field-checkbox .form-widget{
+    margin: 0;
+}

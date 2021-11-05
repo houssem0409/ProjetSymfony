@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="loader-wrapper" class="loader-off">
+        <div id="loader"></div>
+    </div>
+    <!-- Modal Search -->
+    <div class="overlay overlay-scale">
+        <button type="button" class="overlay-close"> ✕</button>
+        <div class="overlay__content">
+            <form id="search-form" class="search-form outer" action="#" method="post">
+                <div class="input-group input-group--wd">
+                    <input type="text" class=" input--full" placeholder="search text here ...">
+                    <span class="input-group__bar"></span></div>
+                <button class="btn btn--wd text-uppercase wave waves-effect">Search</button>
+            </form>
+        </div>
+    </div>
+    <!-- / end Modal Search -->
+    <div class="wrapper">
+        {% block head %}
+            <!-- Header section -->
+            <header class="header header--sticky">
+                <div class="header-line hidden-xs">
+                    <div class="container">
+                        <div class="pull-left">
+                        </div>
+                        <div class="pull-right">
+                            <div class="user-links">
+                                <ul>
+                                    {% if app.user %}
+                                        <li class="user-links__item"><a
+                                                    href="{{ path('app_user_account') }}">Bonjour {{ app.user.fullname }}</a>
+                                        </li>
+                                        <li class="user-links__item"><a href="{{ path('app_logout') }}">Se
+                                                déconnecter</a></li>
+                                    {% else %}
+                                        <li class="user-links__item"><a href="{{ path('app_login') }}">SE CONNECTER</a>
+                                        </li>
+                                        <li class="user-links__item"><a href="{{ path('app_register') }}">S'inscrire</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header__dropdowns-container">
+                    <div class="header__dropdowns">
+                        <div class="header__search pull-left">
+                            <a href="#"
+                               class="btn dropdown-toggle btn--links--dropdown header__dropdowns__button search-open">
+                                <span class="icon icon-search"></span>
+                            </a>
+                        </div>
+                        <div class="header__cart pull-left">
+                            <div class="dropdown pull-right">
+                                <a href="#"
+                                   class="btn dropdown-toggle btn--links--dropdown header__cart__button header__dropdowns__button"
+                                   data-toggle="dropdown">
+                                    <span class="icon icon-bag-alt"></span>
+                                    {% if app.user and app.user.cart %}
+                                        <span class="badge badge--menu">{{ app.user.cart.cartItems | length }}</span>
+                                    {% endif %}
+                                </a>
+                                <div class="dropdown-menu animated fadeIn shopping-cart" role="menu">
+                                    <div class="shopping-cart__top text-uppercase">Aperçu panier</div>
+                                    {% if app.user and app.user.cart and app.user.cart.cartItems | length %}
+                                        <ul>
+                                            {% for item in app.user.cart.cartItems %}
+                                                <li class='shopping-cart__item'>
+                                                <div class="shopping-cart__item__image pull-left">
+                                                    <a href="{{ path('app_product_view', {'id' : item.product.id}) }}">
+                                                        <img src="{{ asset('uploads/' ~ item.product.getFirstImage.name) }}" alt="{{ item.product.getFirstImage.name }}"/>
+                                                    </a>
+                                                </div>
+                                                <div class="shopping-cart__item__info">
+                                                    <div class="shopping-cart__item__info__title">
+                                                        <h2 class="text-uppercase"><a href="{{ path('app_product_view', {'id' : item.product.id}) }}">{{ item.product.name }}</a>
+                                                        </h2>
+                                                    </div>
+                                                    <div class="shopping-cart__item__info__price">{{item.price}} DT</div>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                        <div class="shopping-cart__bottom">
+                                            <div class="pull-left">Sous Total:
+                                                <span class="shopping-cart__total">{{ app.user.cart.getTotalCart }} DT</span>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="{{ path('app_cart') }}" class="btn btn--wd text-uppercase">Voir mon panier</a>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        Votre panier est vide
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if app.user %}
+                            <div class="dropdown pull-right">
+                                <a href="#" class="btn dropdown-toggle btn--links--dropdown header__dropdowns__button"
+                                   data-toggle="dropdown">
+                                    <span class="icon icon-dots"></span>
+                                </a>
+                                <ul class="dropdown-menu ul-row animated fadeIn" role="menu">
+                                    <li class='li-col list-user-menu'>
+                                        <h4>Mon Compte</h4>
+                                        <ul>
+                                            <li><a href="{{ path('app_user_account') }}">Mes informations</a></li>
+                                            <li><a href="{{ path('app_product_new') }}">Vendre</a></li>
+                                            <!--<li><a href="#">Compare</a></li>
+                                           <li><a href="#">Checkout</a></li>-->
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {{ render(controller('App\\Controller\\CategoryController::menu')) }}
+            </header>
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+        {% block footer %}
+            <footer class="footer">
+                <div class="footer__links hidden-xs">
+                    <div class="container">
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+                <div class="footer__column-links">
+                    <div class="back-to-top"><a href="#top" class="btn btn--round btn--round--lg"><span
+                                    class="icon-arrow-up"></span></a></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 hidden-xs hidden-sm">
+                                <h5 class="title text-uppercase mobile-collapse__title">Ecole Polytechnique Sousse</h5>
+                                <div class="v-links-list mobile-collapse__content">
+                                    <ul>
+                                        <li class="icon icon-home">Rue du Commandant Bejaoui, Sousse 4054, Tunisia</li>
+                                        <li class="icon icon-telephone">+216 99 277 877</li>
+                                        <li class="icon icon-mail">houssemdalla@polytechnicien.tn</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-2 mobile-collapse">
+                            </div>
+                            <div class="col-sm-3 col-md-2 mobile-collapse">
+                            </div>
+                            <div class="col-sm-3 col-md-2 mobile-collapse">
+                            </div>
+                            <div class="col-sm-3 col-md-3 mobile-collapse mobile-collapse--last">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer__subscribe">
+                    <div class="container">
+                        <div class="row">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="footer__settings visible-xs">
+                    <div class="container text-center">
+                    </div>
+                </div>
+                <div class="footer__bottom">
+                    <div class="container">
+                        <div class="pull-left text-uppercase">© 2021 <a href="#">Houssem :)</a>. All Rights Reserved.
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+    </div>
+
+{% endblock %}

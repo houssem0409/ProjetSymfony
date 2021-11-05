@@ -1,0 +1,63 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <!-- Content section -->
+    <section class="breadcrumbs  hidden-xs">
+        <div class="container">
+            <ol class="breadcrumb breadcrumb--wd pull-left">
+                <li><a href="{{ path('app_home') }}">Home</a></li>
+                <li class="active">Contact</li>
+            </ol>
+        </div>
+    </section>
+    <section class="content content--parallax content--parallax--high top-null bottom-null" data-image="{{ asset('assets/images/parallax-bg-03.jpg') }}"> </section>
+    <section class="content content--fill top-null">
+        <div class="container">
+            <form id="contactform" class="contact-form" name="contactform" method="post" novalidate>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h2 class="text-uppercase text-center">LEAVE A COMMENT</h2>
+                        <div id="success">
+                            <p>Your message was sent successfully!</p>
+                        </div>
+                        <div id="error">
+                            <p>Something went wrong, try refreshing and submitting the form again.</p>
+                        </div>
+                        <div class="input-group input-group--wd">
+                            <input type="text" class="input--full" name="name">
+                            <span class="input-group__bar"></span>
+                            <label>Your Name (required)</label>
+                        </div>
+                        <div class="input-group input-group--wd">
+                            <input type="text" class="input--full" name="email">
+                            <span class="input-group__bar"></span>
+                            <label>Your Email (required)</label>
+                        </div>
+                        <div class="input-group input-group--wd">
+                            <input type="text" class="input--full" name="subject">
+                            <span class="input-group__bar"></span>
+                            <label>Subject</label>
+                        </div>
+                        <div class="input-group input-group--wd">
+                            <textarea class="textarea--full" name="message"></textarea>
+                            <span class="input-group__bar"></span>
+                            <label>Your Message</label>
+                        </div>
+                        <button type="submit" id="submit" class="btn btn--wd text-uppercase wave">Send Message</button>
+                    </div>
+                    <div class="divider divider--sm visible-xs"></div>
+                    <div class="col-sm-5 text-center">
+                        <div class="divider divider--lg visible-lg"></div>
+                        <h2 class="text-uppercase">Let’s Start Now!</h2>
+                        <p>In pellentesque lorem condimentum dui morbi pulvinar dui non quam pretium ut lacinia tortor. Fusce lacinia tempor malesuada. Fringilla penatibus orci est non mollit, suspendisse pulvinar egestas a donec. Vulputate mi dui suscipit, molestie vulputate libero fusce iaculis suscipit. Sapien pede libero.</p>
+                        <p>Main Office: 7563 St. Vincent Place, Glasgow<br/>
+                            Phones: 321321321, 321321321<br/>
+                            Email: <a href="#">info@mydomain.com</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

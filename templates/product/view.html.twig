@@ -1,0 +1,121 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Détails produit{% endblock %}
+
+{% block content %}
+    <div id="pageContent">
+
+        <!-- Breadcrumb section -->
+
+        <section class="breadcrumbs breadcrumbs-boxed">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb--wd pull-left">
+                    <li><a href="{{ path('app_home') }}">Home</a></li>
+                    <li class="active">{{ product.name }}</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Content section -->
+        <section class="content">
+            <div class="container">
+                <div class="row product-info-outer">
+                    <div class="col-sm-5 col-md-5 col-lg-6">
+                        <ul id="singleGalleryVertical">
+                            {% for image in product.images %}
+                                <li><img src="{{ asset('uploads/' ~ image.name) }}" alt="{{ image.name }}"/></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="product-info col-sm-7 col-md-7 col-lg-6">
+                        <div class="product-info__title">
+                            <h2>{{ product.name }}</h2>
+                        </div>
+                        <div class="product-info__sku pull-right">
+                            SKU: {{ product.id }}
+                            {% if product.transactionType == 'A' %}
+                                <span class="label label-success">Achat Immédiat</span>
+                            {% else %}
+                                <span class="label label-success">Enchère</span>
+                            {% endif %}
+                        </div>
+                        <div class="price-box product-info__price">
+                            <span class="price-box__new">{{ product.getMaxPrice }} DT</span>
+                        </div>
+                        <div class="rating product-info__rating hidden-xs"><span class="icon-star"></span><span
+                                    class="icon-star"></span><span class="icon-star"></span><span
+                                    class="icon-star"></span><span class="icon-star"></span></div>
+                        <div class="divider divider--xs product-info__divider"></div>
+                        <div class="product-info__description">
+                            {{ product.description }}
+                        </div>
+                        <div class="divider divider--xs product-info__divider"></div>
+                        {% if expirationDate and product.transactionType == 'E' and product.user != app.user %}
+                            <label>Enchérir</label>
+                        {% endif %}
+                        <div class="outer">
+                            {% if product.transactionType == 'A' %}
+                                <div class="pull-left">
+                                    {% if app.user %}
+                                        {% if app.user.cart and app.user.cart.findItemByProduct(product) %}
+                                            <strong>Produit ajouté</strong>
+                                        {% else %}
+                                            {{ form_start(cartItemForm) }}
+                                            {{ form_widget(cartItemForm.product, {'value' : product.id, 'attr': {'class': 'input-number input--wd input-qty pull-left'}}) }}
+                                            &nbsp;&nbsp;
+                                            <button class="btn btn--wd text-uppercase">Acheter</button>
+                                            {{ form_end(cartItemForm) }}
+                                        {% endif %}
+                                    {% else %}
+                                        &nbsp;&nbsp;<a href="{{ path('app_login') }}"
+                                                       class="btn btn--wd text-uppercase">Se Connecter</a>
+                                    {% endif %}
+                                </div>
+                            {% elseif product.transactionType == 'E' and expirationDate and product.user != app.user %}
+                                {{ form_start(auctionForm) }}
+                                {{ form_widget(auctionForm.price, {'attr': {'class': 'input-number input--wd input-qty pull-left'}}) }}
+                                {{ form_widget(auctionForm.product, {'value' : product.id, 'attr': {'class': 'input-number input--wd input-qty pull-left'}}) }}
+                                {% if app.user %}
+                                    &nbsp;&nbsp;
+                                    <button class="btn btn--wd text-uppercase">Valider</button>
+                                {% else %}
+                                    &nbsp;&nbsp;<a href="{{ path('app_login') }}" class="btn btn--wd text-uppercase">Se
+                                    Connecter</a>
+                                {% endif %}
+                                {{ form_end(auctionForm) }}
+                            {% else %}
+                                {% if product.user != app.user %}
+                                    <strong>Vente Terminée</strong>
+                                {% endif %}
+                            {% endif %}
+                            {% if expirationDate and product.transactionType == 'E' %}
+                                <div style="margin-top: 10px">
+                                    <div id="getting-started"></div>
+                                </div>
+                            {% endif %}
+                            {% for label, messages in app.flashes %}
+                                {% for message in messages %}
+                                    <div class="flash-{{ label }}"
+                                         style="color: red;font-weight: bold;margin-top: 20px;font-size: 16px;">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {% if  expirationDate %}
+        <script type="text/javascript">
+            var remainigTime = new Date('{{ expirationDate |date("m/d/Y H:i:s") }}');
+            jQuery('#getting-started').countdown({until: remainigTime, format: 'dHMS'});
+        </script>
+    {% endif %}
+{% endblock %}

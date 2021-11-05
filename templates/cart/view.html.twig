@@ -1,0 +1,132 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Détails produit
+{% endblock %}
+
+{% block content %}
+	<div
+		id="pageContent">
+
+		<!-- Breadcrumb section -->
+		<section class="breadcrumbs breadcrumbs-boxed">
+			<div class="container">
+				<ol class="breadcrumb breadcrumb--wd pull-left">
+					<li>
+						<a href="{{ path('app_home') }}">Home</a>
+					</li>
+					<li class="active">Votre panier</li>
+				</ol>
+			</div>
+		</section>
+		{% if app.user.cart and app.user.cart.cartItems|length %}
+			<section class="content">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-9 aside-column">
+							<h2 class="text-uppercase">Votre panier</h2>
+							<div class="card card--padding">
+								<table class="table shopping-cart-table text-center">
+									<thead>
+										<tr>
+											<th>&nbsp;</th>
+											<th>Product Name</th>
+											<th>&nbsp;</th>
+											<th>Prix unitaire</th>
+											<th>Qty</th>
+											<th>Sous Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for item in app.user.cart.cartItems %}
+											<tr>
+												<td>
+													<div class="th-title visible-xs">Supprimer:</div>
+													<a class="icon-clear shopping-cart-table__delete" href="#"></a>
+												</td>
+												<td class="no-title">
+													<div class="shopping-cart-table__product-image">
+														<a href="{{ path('app_product_view', {'id' : item.product.id}) }}">
+															<img src="{{ asset('uploads/' ~ item.product.getFirstImage.name) }}" alt="{{ item.product.getFirstImage.name }}"/>
+														</a>
+													</div>
+												</td>
+												<td>
+													<div class="th-title visible-xs">Nom du produit:</div>
+													<h6 class="shopping-cart-table__product-name text-left text-uppercase">
+														<a href="{{ path('app_product_view', {'id' : item.product.id}) }}">{{ item.product.name }}</a>
+													</h6>
+												</td>
+												<td>
+													<div class="th-title visible-xs">Prix Unitaire:</div>
+													<div class="shopping-cart-table__product-price">{{ item.product.price }}
+														DT
+													</div>
+												</td>
+												<td>
+													<div class="th-title visible-xs">QTY:</div>
+													<div class="input-group-qty">
+														1</div>
+												</td>
+												<td>
+													<div class="th-title visible-xs">Sous Total:</div>
+													<div class="shopping-cart-table__product-price">{{ item.product.price }}
+														DT
+													</div>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+								<div class="hr"></div>
+								<div class="divider divider--xs"></div>
+								<div class="row shopping-cart-btns">
+									<div class="col-sm-12 col-md-4">
+										<a href="{{ path('app_home') }}" class="btn btn--wd pull-left">Retour aux
+											                                            courses</a>
+									</div>
+									<div class="divider divider--xs visible-sm visible-xs"></div>
+									<div class="col-sm-12 col-md-8">
+										<a href="#" class="btn btn--wd btn--light pull-right">Vider mon panier</a>
+										<div class="divider divider--xs visible-sm visible-xs"></div>
+									</div>
+									<div class="divider divider--xxs"></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 aside-column">
+							<div class="divider divider--xs"></div>
+							<h4 class="h-pad-sm">Total</h4>
+							<table class="table table-total">
+								<tbody>
+									<tr>
+										<td class="text-left">
+											<h2>Grand Total</h2>
+										</td>
+										<td class="text-right">
+											<h2>{{ app.user.cart.getTotalCart }}
+												DT</h2>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+		{% else %}
+			<section class="content">
+				<div class="container">
+					<div class="text-center">
+						<img src="{{ asset('assets/images/shopping-cart-icon.png')}}" alt="shopping cart empty" class="img-responsive img-center"/>
+						<div class="divider divider--sm"></div>
+						<h2 class="text-uppercase">Votre panier est vide...</h2>
+						<div class="divider divider--sm"></div>
+						<a href="{{ path('app_home') }}" class="btn btn--wd">COMMENCER MES COURSES</a>
+					</div>
+				</div>
+			</section>
+		{% endif %}
+
+
+	</div>
+{% endblock %}

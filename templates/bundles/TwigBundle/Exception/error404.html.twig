@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}404{% endblock %}
+
+{% block content %}
+    <div id="pageContent">
+
+        <!-- Breadcrumb section -->
+
+        <section class="breadcrumbs  hidden-xs">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb--wd pull-left">
+                    <li><a href="{{ path('app_home') }}">Home</a></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Content section -->
+        <section class="content">
+            <div class="container">
+                <div class="not-found-box">
+                    <div class="not-found-box__image">
+                        <img src="{{ asset('assets/images/page-404.png') }}" alt="">
+                        <div class="not-found-box__text">
+                            <h2 class="text-left">404 ERROR. <br>PAGE NOT FOUND :(</h2>
+                            <h4 class="text-left">
+                                Vous pouvez partir de la page d'accueil ou revenir à la page précédente
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Content section -->
+    </div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div id="loader-wrapper" class="loader-off">
+        <div id="loader"></div>
+    </div>
+    <div class="wrapper">
+        <!-- Header section -->
+        <header class="header header--only-logo header--fill">
+            <div class="container">
+                <!--  Logo  -->          <a class="logo" href="{{ path('app_home') }}">
+                    <img class="logo-default" src="{{ asset('assets/images/logo.png')}}" alt=""/>
+                    <img class="logo-mobile" src="{{ asset('assets/images/logo-mobile.png')}}" alt=""/>
+                    <img class="logo-transparent" src="{{ asset('assets/images/logo-transparent.png')}}" alt=""/>
+                </a>
+                <!-- End Logo -->
+            </div>
+        </header>
+        <div id="pageContent">
+
+            <!-- Content section -->
+
+            <section class="content content--fill top-null">
+                <div class="container">
+                    <h2 class="h-pad-sm text-uppercase text-center">Déjà enregistré?</h2>
+                    <h6 class="text-uppercase text-center">
+                        Si vous avez un compte chez nous, veuillez vous connecter.</h6>
+                    <div class="divider divider--sm"></div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                            <div class="card card--form"> <a href="#" class="icon card--form__icon icon-user-circle"></a>
+                                {% if error %}
+                                    <h3>
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                        <br/>
+                                    </h3>
+                                {% endif %}
+                                <form method="post" class="contact-form">
+                                    <input type="text" class="input--wd input--wd--full" placeholder="Email" id="email"
+                                           name="email" value="{{ last_username }}">
+                                    <input type="password" class="input--wd input--wd--full" placeholder="Mot de passe" id="password" name="password">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <div class="divider divider--xs"></div>
+                                    <button type="submit" class="btn btn--wd text-uppercase wave waves-effect">Se connecter</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider divider--md"></div>
+                    <div class="text-center"><a href="{{path('app_register')}}" class="btn btn--wd text-uppercase wave">créer votre compte</a></div>
+                    <div class="divider divider--md"></div>
+                </div>
+            </section>
+
+            <!-- End Content section -->
+        </div>
+    </div>
+{% endblock %}

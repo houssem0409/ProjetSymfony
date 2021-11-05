@@ -1,0 +1,124 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Détails catégorie{% endblock %}
+
+{% block content %}
+    <div id="pageContent" class="page-content page-content--fill">
+        <!-- Breadcrumb section -->
+        <section class="breadcrumbs  hidden-xs">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb--wd pull-left">
+                    <li><a href="#">Home</a></li>
+                    <li class="active">{{ category.name }}</li>
+                </ol>
+            </div>
+        </section>
+        <!-- Content section -->
+        <section class="content top-null">
+            <div class="container">
+                <div class="category-outer">
+                    <div class="category-outer__text">
+                        <h2 class="category-outer__text__title text-uppercase">{{ category.name }}</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% if category.children | length %}
+        <section class="content">
+            <div class="container">
+                <div class="product-category-carousel mobile-special-arrows animated-arrows slick">
+                    {% for child in category.children %}
+                        <div class="product-category hover-squared">
+                            <a href="{{ path('app_category_view', {'id': child.id}) }}">
+                                <img src="{{ asset('assets/images/category-empty-small.png') }}"
+                                     data-lazy="{{ asset('assets/images/category-img-06.jpg') }}" alt="#">
+                            </a>
+                            <div class="product-category__hover caption"></div>
+                            <div class="product-category__info">
+                                <div class="product-category__info__ribbon">
+                                    <h5 class="product-category__info__ribbon__title">{{ child.name }}</h5>
+                                    <div class="product-category__info__ribbon__count">{{ child.products|length }}
+                                        produits
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+         {% if products | length %}
+            <section class="content">
+            <div class="container">
+                <div class="filters-row row">
+                    <div class="col-sm-4 col-md-5 col-lg-3 col-1">
+                        <a class="filters-row__view active link-grid-view icon icon-keyboard"></a>
+                        <a class="filters-row__view link-row-view icon icon-list"></a>
+                    </div>
+                    <div class="col-sm-8 col-md-7 col-lg-6 col-2">
+                        <div class="filters-row__items">{{ products|length }} Item(s)</div>
+                    </div>
+                </div>
+                <div class="outer">
+                    <div id="centerCol">
+                        <!-- Modal -->
+                        <div class="modal quick-view zoom" id="quickView" style="opacity: 1">
+                            <div class="modal-dialog">
+                                <div class="modal-content"></div>
+                            </div>
+                        </div>
+                        <!-- /.modal -->
+                        <div class="products-grid products-listing products-col products-isotope four-in-row">
+                            {% for product in products %}
+                                 <div class="product-preview-wrapper">
+                                <div class="product-preview">
+                                    <div class="product-preview__image">
+                                        <a href="{{ path('app_product_view', {'id': product.id}) }}">
+                                            <img src="{{ asset('uploads/' ~ product.getFirstImage.name) }}" alt="{{ product.name }}"/>
+                                        </a>
+                                        <div class="product-preview__label product-preview__label--right product-preview__label--sale">
+                                            {% if product.transactionType == 'A' %}
+                                                <span>Achat Immédiat</span>
+                                            {% else %}
+                                                <span>Enchère</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="product-preview__info text-center">
+                                        <div class="product-preview__info__title">
+                                            <h2>
+                                                <a href="{{ path('app_product_view', {'id': product.id}) }}">{{ product.name }}</a>
+                                            </h2>
+                                        </div>
+                                        <div class="rating">
+                                            <span class="icon-star"></span>
+                                            <span class="icon-star"></span>
+                                            <span class="icon-star"></span>
+                                            <span class="icon-star"></span>
+                                            <span class="icon-star"></span>
+                                        </div>
+                                        <div class="price-box ">
+                                            <span class="price-box__new">{{ product.getMaxPrice }} DT</span>
+                                        </div>
+                                        <div class="product-preview__info__description">
+                                            <p>{{ product.description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/elevatezoom/jquery.elevatezoom.js') }}"></script>
+    <script src="{{ asset('assets/vendor/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/nouislider/nouislider.min.js') }}"></script>
+{% endblock %}

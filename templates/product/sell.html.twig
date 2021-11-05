@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Vendre un produit{% endblock %}
+
+{% block content %}
+    <div id="pageContent">
+
+        <!-- Breadcrumb section -->
+
+        <section class="breadcrumbs  hidden-xs">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb--wd pull-left">
+                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="active">Vendre un produit</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Content section -->
+        <section class="content">
+            <div class="container">
+                <h2 class="text-uppercase">Vendre un produit</h2>
+                <div class="card card--padding">
+                    <div class="card__row-line">
+                        <h4 class="text-uppercase h-pad-xs">Mon produit</h4>
+                    </div>
+                    <div class="card__row-line">
+                        {{ form_start(productForm) }}
+                        <div class="form">
+                            <div class="row">
+                                <div id="error">
+                                    <p>Something went wrong, try refreshing and submitting the form again.</p>
+                                </div>
+                                <div>
+                                    {{ form_widget(productForm.category, {'attr': {'class': 'selectpicker', 'data-style': 'select--wd', 'data-width': '100%'}}) }}
+                                </div>
+                                <br/>
+                                <div class="input-group input-group--wd">
+                                    {{ form_widget(productForm.name, {'attr': {'class': 'input--full'}}) }}
+                                    <span class="input-group__bar"></span>
+                                    <label>Label</label>
+                                </div>
+                                <div class="input-group input-group--wd">
+                                    {{ form_widget(productForm.shortDescription, {'attr': {'class': 'input--full'}}) }}
+                                    <span class="input-group__bar"></span>
+                                    <label>Description courte</label>
+                                </div>
+                                <div class="input-group input-group--wd">
+                                    {{ form_widget(productForm.description, {'attr': {'class': 'input--full'}}) }}
+                                    <span class="input-group__bar"></span>
+                                    <label>Description</label>
+                                </div>
+                                <div>
+                                    {{ form_widget(productForm.transactionType, {'attr': {'class': 'selectpicker', 'data-style': 'select--wd', 'data-width': '100%'}}) }}
+                                </div>
+                                <br/>
+                                <div class="input-group input-group--wd">
+                                    {{ form_widget(productForm.price, {'attr': {'class': 'input--full'}}) }}
+                                    <span class="input-group__bar"></span>
+                                    <label>Prix en DT</label>
+                                </div>
+                                <div class="input-group input-group--wd">
+                                    {{ form_widget(productForm.timeLimit, {'attr': {'class': 'input--full'}}) }}
+                                    <span class="input-group__bar"></span>
+                                    <label>Temps d'enchère en <strong>heures</strong></label>
+                                </div>
+                                {{ form_widget(productForm.images) }}
+                                <br/>
+                                <button type="submit" id="submit" class="btn btn--wd text-uppercase wave">Valider
+                                </button>
+                            </div>
+                        </div>
+                        {{ form_end(productForm) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Content section -->
+    </div>
+{% endblock %}

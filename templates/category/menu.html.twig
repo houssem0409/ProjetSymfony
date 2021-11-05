@@ -1,0 +1,50 @@
+<nav class="navbar navbar-wd" id="navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" id="slide-nav"><span class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <!--  Logo  -->
+            <a class="logo" href="{{ path('app_home') }}">
+                <img class="logo-default" src="{{ asset('assets/images/ishop/logo.png') }}" alt=""/>
+                <img class="logo-mobile" src="{{ asset('assets/images/ishop/logo-mobile.png') }}" alt=""/>
+                <img class="logo-transparent" src="{{ asset('assets/images/ishop/logo-transparent.png') }}" alt=""/>
+            </a>
+            <!-- End Logo -->
+        </div>
+        <div class="pull-left search-focus-fade" id="slidemenu">
+            <div class="slidemenu-close visible-xs">✕</div>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path('app_home') }}" class="wave"><span class="link-name">Accueil</span></a></li>
+                <li><a href="{{ path('app_about') }}" class="wave"><span class="link-name">Qui sommes nous ?</span></a>
+                </li>
+                <li class="menu-large">
+                    <a href="#" class="dropdown-toggle">
+                        <span class="link-name">Catégories</span>
+                        <span class="caret caret--dots"></span>
+                    </a>
+                    <div class="dropdown-menu megamenu animated fadeIn">
+                        <div class="container">
+                            <ul class="megamenu__columns">
+                                {% for category in categories %}
+                                    <li class="level-menu level1">
+                                        <ul>
+                                            <li class="title"><a href="{{ path('app_category_view', {'id': category.id}) }}">{{ category.name }}</a></li>
+                                            {% for child in category.children %}
+                                                <li class="level2">
+                                                    <a href="{{ path('app_category_view', {'id': child.id}) }}">
+                                                        {{ child.name }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="{{ path('app_contact') }}" class="wave"><span class="link-name">Contact</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
